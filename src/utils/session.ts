@@ -19,7 +19,7 @@ export async function decrypt(
   session: string | undefined = ""
 ): Promise<JosePayload | undefined> {
   if (!session || session.trim() === "") {
-    console.warn("Session token is empty or undefined");
+    // console.warn("Session token is empty or undefined");
     return undefined;
   }
   try {
