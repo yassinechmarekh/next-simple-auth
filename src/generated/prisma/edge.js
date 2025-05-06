@@ -154,6 +154,10 @@ const config = {
         "fromEnvVar": null,
         "value": "darwin",
         "native": true
+      },
+      {
+        "fromEnvVar": null,
+        "value": "rhel-openssl-3.0.x"
       }
     ],
     "previewFeatures": [],
@@ -171,16 +175,17 @@ const config = {
     "db"
   ],
   "activeProvider": "postgresql",
+  "postinstall": false,
   "inlineDatasources": {
     "db": {
       "url": {
         "fromEnvVar": "DATABASE_URL",
-        "value": "postgresql://neondb_owner:npg_QYOGi3Cbo0dP@ep-quiet-poetry-a2ogr9vr-pooler.eu-central-1.aws.neon.tech/neondb?sslmode=require"
+        "value": null
       }
     }
   },
-  "inlineSchema": "generator client {\n  provider = \"prisma-client-js\"\n  output   = \"../src/generated/prisma\"\n}\n\ndatasource db {\n  provider = \"postgresql\"\n  url      = env(\"DATABASE_URL\")\n}\n\nmodel User {\n  id            String    @id() @default(cuid())\n  username      String\n  email         String    @unique\n  password      String\n  isAdmin       Boolean   @default(false)\n  otpCode       String?\n  otpExpiresAt  DateTime?\n  emailVerified DateTime?\n  createdAt     DateTime  @default(now())\n  updatedAt     DateTime  @updatedAt\n}\n\nmodel ResetPasswordToken {\n  id        String   @id @default(cuid())\n  email     String\n  token     String   @unique\n  expiresAt DateTime\n\n  @@unique([email, token])\n}\n",
-  "inlineSchemaHash": "702822fa4a0b3581fc41209de4042e94388128fd80189faad2d193938213e316",
+  "inlineSchema": "generator client {\n  provider      = \"prisma-client-js\"\n  output        = \"../src/generated/prisma\"\n  binaryTargets = [\"native\", \"rhel-openssl-3.0.x\"]\n}\n\ndatasource db {\n  provider = \"postgresql\"\n  url      = env(\"DATABASE_URL\")\n}\n\nmodel User {\n  id            String    @id() @default(cuid())\n  username      String\n  email         String    @unique\n  password      String\n  isAdmin       Boolean   @default(false)\n  otpCode       String?\n  otpExpiresAt  DateTime?\n  emailVerified DateTime?\n  createdAt     DateTime  @default(now())\n  updatedAt     DateTime  @updatedAt\n}\n\nmodel ResetPasswordToken {\n  id        String   @id @default(cuid())\n  email     String\n  token     String   @unique\n  expiresAt DateTime\n\n  @@unique([email, token])\n}\n",
+  "inlineSchemaHash": "fc90f0b3507462d5f6f631eac5db6d85e29d4c49d44be491dd946c990b3b1fa1",
   "copyEngine": true
 }
 config.dirname = '/'
