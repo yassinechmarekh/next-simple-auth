@@ -18,6 +18,10 @@ export async function encrypt(payload: JosePayload) {
 export async function decrypt(
   session: string | undefined = ""
 ): Promise<JosePayload | undefined> {
+  if (!session || session.trim() === "") {
+    console.warn("Session token is empty or undefined");
+    return undefined;
+  }
   try {
     const { payload }: { payload: JosePayload } = await jwtVerify(
       session,
